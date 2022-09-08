@@ -30,14 +30,15 @@ def gravar():
         conn.comit() 
     return render_template('formulario.html') 
 
-@app.route('/listar', methods=['POST', GET])
+@app.route('/listar', methods=['POST','GET'])
 def listar():
-        conn = mysql.connect() 
-        cursor = conn.cursor()
-        cursor.execute('select (user_name, number_cpf, user_adress from formulario')
-        data = cursor.fetchall()
-        conn.comit()
-        return render_template('lista.html', datas=data)
-        if __name__=="__main__":
-            port = int(os.environ.get("PORT",5008))
-            app.run(host='0.0.0.0', port=port)
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('select user_name, user_username, user_password from tbl_user')
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('lista.html', datas=data)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5008))
+    app.run(host='0.0.0.0', port=port)
